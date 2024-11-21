@@ -1,0 +1,24 @@
+.toast-modal {
+    position: fixed;
+    top: 50px;
+    right: -300px;
+    /* Початкове положення за межами екрану */
+    width: 250px;
+    padding: 15px 20px;
+    background-color: #28a745;
+    /* Зелений колір для успішного повідомлення */
+    color: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    font-size: 16px;
+    font-weight: bold;
+    z-index: 1000;
+    transition: right 0.5s ease-in-out;
+    /* Анімація для плавного руху */
+}
+
+/* Коли з'являється */
+.toast-modal.show {
+    right: 20px;
+    /* Положення, де вікно з'являється */
+}
