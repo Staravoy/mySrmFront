@@ -37,6 +37,7 @@ export const deleteClient = async (id) => {
     }
 };
 
+// Функція редагування клієнту
 export const updateClient = async (id, updatedData) => {
     try {
         const response = await axios.put(`${BASE_URL}/api/client/update/${id}/`, updatedData);
