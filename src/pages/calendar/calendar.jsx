@@ -9,7 +9,7 @@ import ReactBigCalendar from './ReactBigCalendar'
 const MyCalendar = () => {
     return (
         <div>
-            <div className="d-flex align-items-center">
+            {/* <div className="d-flex align-items-center">
                 <h2 className="p-2">Календар</h2>
                 <img className="InformIcon" src={InformIcon} alt="InformIcon" />
                 <p className="p-2 text-secondary mb-0">
@@ -22,7 +22,7 @@ const MyCalendar = () => {
                 >
                     Додати подію
                 </button>
-            </div>
+            </div> */}
 
             < ReactBigCalendar />
 
