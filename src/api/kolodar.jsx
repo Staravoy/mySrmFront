@@ -18,9 +18,34 @@ export const getAllEvents = async () => {
 export const addEvent = async (newEvent) => {
     try {
         const response = await axios.post(`${BASE_URL}addEvent/`, newEvent);
+        console.log(response.data)
         return response.data; // Повертає доданого клієнта
     } catch (error) {
         console.error('Помилка додавання клієнта:', error);
         throw error; // Обробка помилки
     }
 };
+
+// Функція видалення події
+export const deleteEvent = async (id) => {
+    try {
+        const response = await axios.delete(`${BASE_URL}deleteEvent/${id}/`);
+        return response.data;
+    } catch (error) {
+        console.error('Помилка видалення клієнта:', error);
+        throw error;
+    }
+};
+
+// Функція редагування події
+export const updateEvent = async (id, updatedData) => {
+    try {
+        const response = await axios.put(`${BASE_URL}editEvent/${id}/`, updatedData);
+        return response.data;
+    } catch (error) {
+        console.error('Помилка редагування події:', error);
+        throw error;
+    }
+};
+
+

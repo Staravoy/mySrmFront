@@ -1,0 +1,11 @@
+div.rbc-day-slot:hover {
+    background-color: rgba(0, 123, 255, 0.1);
+    /* Легкий синій фон */
+    cursor: pointer;
+    /* Вказівка на інтерактивність */
+}
+
+div.rbc-day-slot {
+    transition: background-color 0.3s ease;
+    /* Плавний перехід */
+}

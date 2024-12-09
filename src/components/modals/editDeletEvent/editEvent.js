@@ -1,28 +1,46 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import moment from "moment";
-import { addEvent } from "../../../api/kolodar";
+import { updateEvent } from "../../../api/kolodar";
 
+const EditEvent = ({ setShowModal, selectedEvent, openMiniModal, closeEventModal, fetchAllEvents }) => {
+    const [dataEvent, setDataEvent] = useState({
+        title: "",
+        start: new Date(),
+        end: new Date(),
+    });
 
-
-// ------------------------------- UNDER THE HOOD --------------------------------------
-const MwAddEvent = ({ newEvent, setShowModal, handleAddEvent, setNewEvent, openMiniModal}) => {
-    const addEventToDB = async () => {
-        if (!newEvent.title || !newEvent.start || !newEvent.end) {
-            alert("Будь ласка, заповніть усі поля.");
-            return;
+    useEffect(() => {
+        if (selectedEvent) {
+            setDataEvent({
+                title: selectedEvent.title || "",
+                start: selectedEvent.start ? new Date(selectedEvent.start) : new Date(),
+                end: selectedEvent.end ? new Date(selectedEvent.end) : new Date(),
+            });
         }
+    }, [selectedEvent]);
 
+    const changeEvent = (e) => {
+        const { name, value } = e.target;
+        setDataEvent({
+            ...dataEvent,
+            [name]: value,
+        });
+    };
+
+    const redactEvent = async (e) => {
+        e.preventDefault();
         try {
-            await addEvent(newEvent); // Виклик API
-            handleAddEvent(); // Оновлення стану
-            openMiniModal('Подію додано!'); // Показуємо повідомлення
+            const updatedEvent = await updateEvent(selectedEvent.id, dataEvent); // Повертає оновлені дані
+            setShowModal(false); // Закриваємо модальне вікно
+            closeEventModal(false)
+            openMiniModal("Подію відредаговано")
+            fetchAllEvents()
         } catch (error) {
-            console.error("Помилка додавання події:", error);
+            console.error("Помилка редагування події:", error);
         }
     };
 
 
-// --------------------------------- RENDER --------------------------------------
     return (
         <div>
             <div
@@ -34,7 +52,7 @@ const MwAddEvent = ({ newEvent, setShowModal, handleAddEvent, setNewEvent, openM
                 <div className="modal-dialog">
                     <div className="modal-content">
                         <div className="modal-header">
-                            <h5 className="modal-title">Додати подію</h5>
+                            <h5 className="modal-title">Внести зміни</h5>
                             <button
                                 type="button"
                                 className="btn-close"
@@ -48,10 +66,9 @@ const MwAddEvent = ({ newEvent, setShowModal, handleAddEvent, setNewEvent, openM
                                     <input
                                         type="text"
                                         className="form-control"
-                                        value={newEvent.title}
-                                        onChange={(e) =>
-                                            setNewEvent({ ...newEvent, title: e.target.value })
-                                        }
+                                        name="title"
+                                        value={dataEvent.title}
+                                        onChange={changeEvent}
                                     />
                                 </div>
                                 <div className="mb-3">
@@ -59,10 +76,11 @@ const MwAddEvent = ({ newEvent, setShowModal, handleAddEvent, setNewEvent, openM
                                     <input
                                         type="datetime-local"
                                         className="form-control"
-                                        value={moment(newEvent.start).format("YYYY-MM-DDTHH:mm")}
+                                        name="start"
+                                        value={moment(dataEvent.start).format("YYYY-MM-DDTHH:mm")}
                                         onChange={(e) =>
-                                            setNewEvent({
-                                                ...newEvent,
+                                            setDataEvent({
+                                                ...dataEvent,
                                                 start: new Date(e.target.value),
                                             })
                                         }
@@ -73,10 +91,11 @@ const MwAddEvent = ({ newEvent, setShowModal, handleAddEvent, setNewEvent, openM
                                     <input
                                         type="datetime-local"
                                         className="form-control"
-                                        value={moment(newEvent.end).format("YYYY-MM-DDTHH:mm")}
+                                        name="end"
+                                        value={moment(dataEvent.end).format("YYYY-MM-DDTHH:mm")}
                                         onChange={(e) =>
-                                            setNewEvent({
-                                                ...newEvent,
+                                            setDataEvent({
+                                                ...dataEvent,
                                                 end: new Date(e.target.value),
                                             })
                                         }
@@ -95,16 +114,15 @@ const MwAddEvent = ({ newEvent, setShowModal, handleAddEvent, setNewEvent, openM
                             <button
                                 type="button"
                                 className="btn btn-primary"
-                                onClick={addEventToDB}
+                                onClick={redactEvent}
                             >
-                                Додати подію
+                                Зберігти зміни
                             </button>
                         </div>
                     </div>
                 </div>
             </div>
 
-            {/* Затемнення фону */}
             <div
                 className="modal-backdrop fade show"
                 style={{
@@ -120,4 +138,4 @@ const MwAddEvent = ({ newEvent, setShowModal, handleAddEvent, setNewEvent, openM
     );
 };
 
-export default MwAddEvent;
+export default EditEvent;

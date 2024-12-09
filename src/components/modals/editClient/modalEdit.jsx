@@ -10,7 +10,6 @@ const ModalAddClient = ({ closeEditModal, openMiniModal, fetchClients, editingCl
 
     useEffect(() => {
         if (editingClient) {
-            console.log("Модальне вікно отримало дані:", editingClient);
             setFormData({
                 nameClient: editingClient.nameClient || '',
                 phoneNumber: editingClient.phoneNumber || '',
