@@ -1,28 +1,31 @@
 import React from "react";
 import moment from "moment";
+import ClientsSearch from "./clientsSearch";
 import { addEvent } from "../../../api/kolodar";
 
-
-
-// ------------------------------- UNDER THE HOOD --------------------------------------
-const MwAddEvent = ({ newEvent, setShowModal, handleAddEvent, setNewEvent, openMiniModal}) => {
+const MwAddEvent = ({ newEvent, setShowModal, handleAddEvent, setNewEvent, openMiniModal }) => {
     const addEventToDB = async () => {
-        if (!newEvent.title || !newEvent.start || !newEvent.end) {
+        if (!newEvent.title || !newEvent.client || !newEvent.start || !newEvent.end) {
             alert("Будь ласка, заповніть усі поля.");
             return;
         }
-
         try {
             await addEvent(newEvent); // Виклик API
             handleAddEvent(); // Оновлення стану
-            openMiniModal('Подію додано!'); // Показуємо повідомлення
+            openMiniModal("Подію додано!"); // Показуємо повідомлення
         } catch (error) {
             console.error("Помилка додавання події:", error);
         }
     };
 
+    // const handleClientSelect = (client) => {
+    //     setNewEvent({ ...newEvent, client }); // Оновлюємо newEvent з вибраним клієнтом
+    // };
 
-// --------------------------------- RENDER --------------------------------------
+      const handleClientSelect = (name) => {
+        setNewEvent({ ...newEvent, client: name }); // Оновлюємо ім'я клієнта
+    };
+
     return (
         <div>
             <div
@@ -54,6 +57,10 @@ const MwAddEvent = ({ newEvent, setShowModal, handleAddEvent, setNewEvent, openM
                                         }
                                     />
                                 </div>
+
+                                <ClientsSearch onClientSelect={handleClientSelect} />
+
+
                                 <div className="mb-3">
                                     <label className="form-label">Початок:</label>
                                     <input

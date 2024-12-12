@@ -2,9 +2,12 @@ import React, { useState, useEffect } from "react";
 import moment from "moment";
 import { updateEvent } from "../../../api/kolodar";
 
+
+// ------------------------- UNDER THE HOOD -----------------------------------------
 const EditEvent = ({ setShowModal, selectedEvent, openMiniModal, closeEventModal, fetchAllEvents }) => {
     const [dataEvent, setDataEvent] = useState({
         title: "",
+        client: "",
         start: new Date(),
         end: new Date(),
     });
@@ -13,6 +16,7 @@ const EditEvent = ({ setShowModal, selectedEvent, openMiniModal, closeEventModal
         if (selectedEvent) {
             setDataEvent({
                 title: selectedEvent.title || "",
+                client: selectedEvent.client || "",
                 start: selectedEvent.start ? new Date(selectedEvent.start) : new Date(),
                 end: selectedEvent.end ? new Date(selectedEvent.end) : new Date(),
             });
@@ -40,7 +44,7 @@ const EditEvent = ({ setShowModal, selectedEvent, openMiniModal, closeEventModal
         }
     };
 
-
+// ----------------------------- RENDER -------------------------------
     return (
         <div>
             <div
@@ -71,6 +75,19 @@ const EditEvent = ({ setShowModal, selectedEvent, openMiniModal, closeEventModal
                                         onChange={changeEvent}
                                     />
                                 </div>
+
+                                <div className="mb-3">
+                                    <label className="form-label">Клієнт:</label>
+                                    <input
+                                        type="text"
+                                        className="form-control"
+                                        name="name"
+                                        value={dataEvent.client}
+                                        onChange={changeEvent}
+                                    />
+                                </div>
+
+
                                 <div className="mb-3">
                                     <label className="form-label">Початок:</label>
                                     <input

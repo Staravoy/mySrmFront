@@ -45,6 +45,7 @@ export default function ReactBigCalendar() {
 // Форма для додавання події
     const [newEvent, setNewEvent] = useState({
       title: "",
+      client:"",
       start: new Date(),
       end: new Date(),
     });

@@ -57,13 +57,10 @@ function MwEditDelet({ closeEventModal, selectedEvent, openMiniModal, fetchAllEv
                                 <div className="mb-3 text-center">
                                      <p>{selectedEvent.title}</p>
                                 </div>
-                                 
-                                 <div className='mb-3 text-center'>
-                                     <p>Тут опис події</p>
-                                 </div>
+
                                  
                                 <div className='mb-3 text-center'>
-                                     <p>Тут імʼя клієнта</p>
+                                     <p>{selectedEvent.client}</p>
                                 </div>
 
                                 <div className="mb-3">

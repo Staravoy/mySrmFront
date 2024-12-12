@@ -116,7 +116,7 @@ const ClientTable = () => {
                 </button>
             </div>
 
-            {/* Основне МВ */}
+            {/* МВ для додавання клієнта */}
             {isOpenModal && <Modal
                 closeModal={closeModal}
                 openMiniModal={openMiniModal}
